@@ -4,21 +4,60 @@ import { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
-let name = {
-  name: "NIdhi",
-  age: 27,
-};
+function GitHubUser({login}) {
+  const [data, setData] = useState(null);
 
-const [first, , fruit] = [
-  "nid",
-  "Hiw",
-  "best"
-];
-let lakeList = [
-  "U lake",
-  "M lake",
-  "L lake"
-];
+  useEffect(() => {
+    fetch(`https:github.com/users/${login}`)
+    .then(res => res.json())
+    .then(setData)
+    .error(console.error);
+  }, []);
+  
+  if(data) {
+    return (
+      <div>
+        <h1>{data.login}</h1>
+        <img src={data.avatar_url} width={100}/>
+      </div>
+    );
+  }
+
+  return null;
+}
+
+function FectchGitHubUser() {
+  return <GitHubUser login="moonhighway"/>
+}
+
+function Inputda() {
+  const [val, setVal] = useState("");
+  const [val2, setVal2] = useState("");
+
+  useEffect(() => {
+    console.log(`input1: ${val}`);
+  }, [val])
+
+  useEffect(() => {
+    console.log(`input2: ${val2}`);
+  }, [val2])
+
+  return(
+    <>
+      <lable>input1
+        <input value={val}
+        onChange={e => setVal(e.target.value)}
+        />
+      </lable>
+      <br/>
+      <lable>input12
+        <input value={val2}
+        onChange={e => setVal2(e.target.value)}
+        />
+      </lable>
+    </>
+  )
+}
 
 function Check() {
   const [checked, setChecked] = useState(false);
@@ -104,9 +143,27 @@ function Parent(props) {
   )
 }
 
+
+let name = {
+  name: "NIdhi",
+  age: 27,
+};
+
+const [first, , fruit] = [
+  "nid",
+  "Hiw",
+  "best"
+];
+let lakeList = [
+  "U lake",
+  "M lake",
+  "L lake"
+];
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Check />,
+  <Inputda />,
+  // <Check />,
   // <App lakes={lakeList} />,
   // <State />,
   // <Parent/>,
